@@ -16,7 +16,7 @@ NPM		 = npm
 #
 # Files
 #
-JS_FILES	:= $(shell find examples lib -name '*.js')
+JS_FILES	:= $(shell find examples lib tests -name '*.js')
 JSL_FILES_NODE   = $(JS_FILES)
 JSSTYLE_FILES	 = $(JS_FILES)
 JSL_CONF_NODE	 = jsl.node.conf
@@ -24,5 +24,12 @@ JSL_CONF_NODE	 = jsl.node.conf
 .PHONY: all
 all:
 	$(NPM) install
+
+.PHONY: test
+test:
+	node tests/tst.invalid.js
+	node tests/tst.basic.js
+	node tests/tst.eval.js
+	@echo all tests passed
 
 include ./Makefile.targ
