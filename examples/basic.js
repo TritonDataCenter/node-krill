@@ -8,7 +8,7 @@ var typesconf, predconf, predicate, values;
 
 typesconf = {
     'hostname': 'string',
-    'latency': 'numeric'
+    'latency': 'number'
 };
 
 predconf = {
