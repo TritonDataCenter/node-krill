@@ -18,21 +18,23 @@ be type-checked when you create it.
 ```javascript
 /*
  * Example user input.  There are two fields: "hostname", a string, and
- * "latency", a number.  This predicate will be true if the "hostname" value is
- * "spike" and the "latency" variable is a number greater than 300.
+ * "latency", a number.
  */
 var types = {
     'hostname': 'string',
     'latency': 'number'
 };
 
+/*
+ * This predicate will be true if the "hostname" value is "spike" OR the
+ * "latency" variable is a number greater than 300.
+ */
 var input = {
     'or': [
-	{ 'eq': [ 'hostname', 'spike' ] },
-	{ 'gt': [ 'latency', 300 ] }
+        { 'eq': [ 'hostname', 'spike' ] },
+        { 'gt': [ 'latency', 300 ] }
     ]
 };
-
 
 /* Validate predicate syntax and types and throw on error. */
 console.log(input);
@@ -44,6 +46,7 @@ A *trivial* predicate is one that's just "true":
 ```javascript
 /* Check whether this predicate is trivial (always returns true) */
 console.log('trivial? ', predicate.trivial());
+/* Prints: "false" */
 ```
 
 You can print out the fields (variables) used in this predicate:
@@ -51,6 +54,7 @@ You can print out the fields (variables) used in this predicate:
 ```javascript
 /* Enumerate the fields contained in this predicate. */
 console.log('fields: ', predicate.fields().join(', '));
+/* Prints: "hostname, latency" */
 ```
 
 You can also print a C-syntax expression for this predicate, which you can
@@ -59,6 +63,7 @@ actually plug directly into a C-like language (like JavaScript) to evaluate it:
 ```javascript
 /* Print a DTrace-like representation of the predicate. */
 console.log('DTrace format: ', predicate.toCStyleString());
+/* Prints "(hostname == "spike") || (latency > 300)" */
 ```
 
 You can also evaluate the predicate for a specific set of values:
@@ -84,13 +89,13 @@ All predicates can be represented as JSON objects, and you typically pass such
 an object into `createPredicate` to work with them.  The simplest predicate is:
 
 ```javascript
-{}					/* always evaluates to "true" */
+{}                                      /* always evaluates to "true" */
 ```
 
 The general pattern for relational operators is:
 
 ```javascript
-{ 'OPERATOR': [ 'VARNAME', 'VALUE' ] }	
+{ 'OPERATOR': [ 'VARNAME', 'VALUE' ] }  
 ```
 
 In all of these cases, OPERATOR must be one of the built-in operators, VARNAME
@@ -109,8 +114,8 @@ The built-in operators are:
 For examples:
 
 ```javascript
-{ 'eq': [ 'hostname', 'spike' ] }	/* "hostname" variable == "spike" */
-{ 'lt': [ 'count',    15      ] }	/* "count" variable <= 15 */
+{ 'eq': [ 'hostname', 'spike' ] }       /* "hostname" variable == "spike" */
+{ 'lt': [ 'count',    15      ] }       /* "count" variable <= 15 */
 ```
 
 You can also use "and" and "or", which have the form:
@@ -122,15 +127,17 @@ You can also use "and" and "or", which have the form:
 
 where `expr1`, `expr2`, and so on are any other predicate.  For example:
 
-```
+```javascript
 {
     'or': [
-	{ 'eq': [ 'hostname', 'spike' ] },
-	{ 'gt': [ 'latency', 300 ] }
+        { 'eq': [ 'hostname', 'spike' ] },
+        { 'gt': [ 'latency', 300 ] }
     ]
 };
 ```
 
 is logically equivalent to the C expression:
 
-    `hostname == "spike" || latency > 300`
+```javascript
+hostname == "spike" || latency > 300
+```

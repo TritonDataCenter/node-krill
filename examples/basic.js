@@ -6,14 +6,17 @@ var krill = require('../lib/krill');
 
 /*
  * Example user input.  There are two fields: "hostname", a string, and
- * "latency", a number.  This predicate will be true if the "hostname" value is
- * "spike" and the "latency" variable is a number greater than 300.
+ * "latency", a number.
  */
 var types = {
     'hostname': 'string',
     'latency': 'number'
 };
 
+/*
+ * This predicate will be true if the "hostname" value is "spike" OR the
+ * "latency" variable is a number greater than 300.
+ */
 var input = {
     'or': [
 	{ 'eq': [ 'hostname', 'spike' ] },
