@@ -4,34 +4,35 @@
 
 var krill = require('../lib/krill');
 
-var predicate = {
+var typesconf, predconf, predicate, values;
+
+typesconf = {
+    'hostname': 'string',
+    'latency': 'numeric'
+};
+
+predconf = {
     'or': [
 	{ 'eq': [ 'hostname', 'spike' ] },
 	{ 'gt': [ 'latency', 300 ] }
     ]
 };
 
-/* Validate predicate syntax and throw on error. */
-krill.validateSyntax(predicate);
-console.log(predicate);
-
-/* Validate types and throw on error. */
-krill.validateSemantics({
-    'hostname': 'string',
-    'latency': 'numeric'
-}, predicate);
+/* Validate predicate syntax and types and throw on error. */
+predicate = krill.createPredicate(predconf, typesconf);
+console.log(predconf);
 
 /* Check whether this predicate is trivial (always returns true) */
-console.log('trivial? ', !krill.nonTrivial(predicate));
+console.log('trivial? ', predicate.trivial());
 
 /* Enumerate the fields contained in this predicate. */
-console.log('fields: ', krill.fields(predicate).join(', '));
+console.log('fields: ', predicate.fields().join(', '));
 
 /* Print a DTrace-like representation of the predicate. */
-console.log('DTrace format: ', krill.print(predicate));
+console.log('DTrace format: ', predicate.toCStyleString());
 
 /* Evaluate the predicate for a specific set of values (should return true) */
-var values = [ {
+values = [ {
     'hostname': 'spike',
     'latency': 12
 }, {
@@ -43,5 +44,5 @@ var values = [ {
 } ];
 
 values.forEach(function (val) {
-	console.log(val, krill.eval(predicate, val));
+	console.log(val, predicate.eval(val));
 });
