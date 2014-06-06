@@ -90,6 +90,7 @@ stream that just filters out some results.  You can do this with a
 PredicateStream.  Using the same "types" and "predicate" from above:
 
 ```javascript
+var stream = mod_krill.createPredicateStream({ 'predicate': predicate });
 stream.write({ 'hostname': 'spike', 'latency': 12 });
 stream.write({ 'hostname': 'sharptooth', 'latency': 12 });
 stream.write({ 'hostname': 'sharptooth', 'latency': 400 });
