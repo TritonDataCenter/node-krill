@@ -1,12 +1,16 @@
 {
 	"name": "krill",
 	"description": "simple boolean filter language",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"license": "MIT",
 	"contributors": [
 	    "Robert Mustacchi <rm@joyent.com>",
 	    "Dave Pacheco <dap@joyent.com>"
 	],
+	"repository": {
+	    "type": "git",
+	    "url": "http://github.com/joyent/node-krill.git"
+	},
 	"main": "lib/krill.js",
 	"dependencies": {
 	    "extsprintf": "1.0.2",

@@ -83,6 +83,33 @@ console.log(value, predicate.eval(value));
 ```
 
 
+## Streaming interface
+
+For data processing pipelines, it's useful to treat predicates as a transform
+stream that just filters out some results.  You can do this with a
+PredicateStream.  Using the same "types" and "predicate" from above:
+
+```javascript
+stream.write({ 'hostname': 'spike', 'latency': 12 });
+stream.write({ 'hostname': 'sharptooth', 'latency': 12 });
+stream.write({ 'hostname': 'sharptooth', 'latency': 400 });
+
+/* Prints only the first and third data points. */
+stream.on('data', function (c) { console.log(c); });
+
+/* Prints a warning for invalid records. */
+stream.on('invalid_object', function (obj, err, count) {
+	console.error('object %d is invalid: %s', count, err.message);
+	console.error('object was: %s', JSON.stringify(obj));
+});
+stream.write({ 'hostname': 'invalid' });
+
+/* Shows that 4 objects were processed, 1 was invalid, and 1 was ignored. */
+stream.on('end', function () { console.log(stream.stats()); });
+stream.end();
+```
+
+
 ## JSON input format
 
 All predicates can be represented as JSON objects, and you typically pass such

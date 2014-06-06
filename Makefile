@@ -32,6 +32,7 @@ test:
 	node tests/tst.invalid.js
 	node tests/tst.basic.js
 	node tests/tst.eval.js
+	node tests/tst.stream.js
 	@echo all tests passed
 
 include ./Makefile.targ
