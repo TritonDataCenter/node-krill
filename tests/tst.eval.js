@@ -34,6 +34,22 @@ var test_cases = [ {
 	values: { 'pid': 12 },
 	result: true
 }, {
+	pred: { eq: ['audit', true] },		/* eq: booleans, == */
+	values: { 'audit': true },
+	result: true
+}, {
+	pred: { eq: ['audit', false] },		/* eq: booleans, == */
+	values: { 'audit': true },
+	result: false
+}, {
+	pred: { eq: ['audit', true] },		/* eq: booleans, != */
+	values: { 'audit': false },
+	result: false
+}, {
+	pred: { eq: ['audit', false] },		/* eq: booleans, != */
+	values: { 'audit': false },
+	result: true
+}, {
 	pred: { ne: ['hostname', 'tony'] },	/* ne: strings, != */
 	values: { 'hostname': 'louie' },
 	result: true
@@ -48,6 +64,22 @@ var test_cases = [ {
 }, {
 	pred: { ne: ['pid', 12] },		/* ne: numbers, == */
 	values: { 'pid': 12 },
+	result: false
+}, {
+	pred: { ne: ['audit', true] },		/* ne: booleans, == */
+	values: { 'audit': true },
+	result: false
+}, {
+	pred: { ne: ['audit', false] },		/* ne: booleans, == */
+	values: { 'audit': true },
+	result: true
+}, {
+	pred: { ne: ['audit', true] },		/* ne: booleans, != */
+	values: { 'audit': false },
+	result: true
+}, {
+	pred: { ne: ['audit', false] },		/* ne: booleans, != */
+	values: { 'audit': false },
 	result: false
 }, {
 	pred: { le: ['pid', 10] },		/* le: <, =, > */
