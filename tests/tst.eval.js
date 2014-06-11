@@ -209,6 +209,24 @@ var test_cases = [ {
 	    trump: 'false'
 	},
 	result: false
+}, {
+	pred: { eq: [ 'nested.hostname', 'johnny tightlips' ] },
+	values: {
+	    nested: {
+	        hostname: 'johnny tightlips'
+	    },
+	    pid: 15
+	},
+	result: true
+}, {
+	pred: { eq: [ 'nested.hostname', 'sid the squealer' ] },
+	values: {				/* nested properties */
+	    nested: {
+	        hostname: 'johnny tightlips'
+	    },
+	    pid: 15
+	},
+	result: false
 } ];
 
 var ii, pred, result;
