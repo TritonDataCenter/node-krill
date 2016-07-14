@@ -57,6 +57,15 @@ console.log('fields: ', predicate.fields().join(', '));
 /* Prints: "hostname, latency" */
 ```
 
+You can also get access to an object that represents a map between field names
+and the lists of values used for each field name in this predicate:
+
+```javascript
+/* Output the map between field names and their values */
+console.log('field names to values: ' + predicate.fieldsAndValues());
+/* Prints: { hostname: [ 'spike' ], latency: [ 300 ] } */
+```
+
 You can also print a C-syntax expression for this predicate, which you can
 actually plug directly into a C-like language (like JavaScript) to evaluate it:
 
