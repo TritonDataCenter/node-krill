@@ -66,6 +66,14 @@ console.log('DTrace format: ', predicate.toCStyleString());
 /* Prints "(hostname == "spike") || (latency > 300)" */
 ```
 
+You can also print a LDAP search filter that represents this predicate:
+
+```javascript
+/* Print a LDAP search filter that represents the predicate */
+console.log('LDAP search filter: ', predicate.toLDAPFilterString());
+/* Prints "(|(hostname=spike)(latency>300))" */
+```
+
 You can also evaluate the predicate for a specific set of values:
 
 ```javascript

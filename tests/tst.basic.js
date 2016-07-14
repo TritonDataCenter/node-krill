@@ -14,6 +14,7 @@ pred = mod_krill.createPredicate({});
 mod_assert.ok(pred.trivial());
 mod_assert.deepEqual([], pred.fields());
 mod_assert.equal('1', pred.toCStyleString());
+mod_assert.equal('(*)', pred.toLDAPFilterString());
 mod_assert.ok(pred.eval({}));
 mod_assert.ok(pred.eval({ 'hostname': 'sharptooth' }));
 
@@ -26,6 +27,7 @@ pred = mod_krill.createPredicate(
 mod_assert.ok(!pred.trivial());
 mod_assert.deepEqual([ 'zonename' ], pred.fields());
 mod_assert.equal('zonename == "bar"', pred.toCStyleString());
+mod_assert.equal('(zonename=bar)', pred.toLDAPFilterString());
 mod_assert.throws(function () { pred.eval({}); }, /no translation/);
 mod_assert.ok(pred.eval({ 'zonename': 'bar' }));
 mod_assert.ok(!pred.eval({ 'zonename': 'bob' }));
@@ -49,6 +51,8 @@ mod_assert.deepEqual([ 'hostname', 'latency', 'zonename' ],
     pred.fields().sort());
 mod_assert.equal('(zonename == "bar") && (hostname != "sharptooth") && ' +
     '(latency >= 15)', pred.toCStyleString());
+mod_assert.equal('(&(zonename=bar)(!(hostname=sharptooth))' +
+    '(latency>=15))', pred.toLDAPFilterString());
 mod_assert.throws(function () { pred.eval({}); }, /no translation/);
 mod_assert.throws(function () { pred.eval({
     'hostname': 'bigfoot',
@@ -91,6 +95,8 @@ pred = pred.replaceFields({
 });
 mod_assert.equal('(zonename == "bar") && ("spike" != "sharptooth") && ' +
     '(timestamp - self->f >= 15)', pred.toCStyleString());
+mod_assert.equal('(&(zonename=bar)(!("spike"=sharptooth))' +
+    '(timestamp - self->f>=15))', pred.toLDAPFilterString());
 
 /*
  * Test "or", "lt", "gt", and "le".
