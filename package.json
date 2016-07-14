@@ -1,20 +1,21 @@
 {
-	"name": "krill",
-	"description": "simple boolean filter language",
-	"version": "0.3.0",
-	"license": "MIT",
-	"contributors": [
-	    "Robert Mustacchi <rm@joyent.com>",
-	    "Dave Pacheco <dap@joyent.com>"
-	],
-	"repository": {
-	    "type": "git",
-	    "url": "http://github.com/joyent/node-krill.git"
-	},
-	"main": "lib/krill.js",
-	"dependencies": {
-	    "extsprintf": "1.0.2",
-	    "jsprim": "0.5.1",
-	    "verror": "1.3.6"
-	}
+  "name": "krill",
+  "description": "simple boolean filter language",
+  "version": "0.3.0",
+  "license": "MIT",
+  "contributors": [
+    "Robert Mustacchi <rm@joyent.com>",
+    "Dave Pacheco <dap@joyent.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/joyent/node-krill.git"
+  },
+  "main": "lib/krill.js",
+  "dependencies": {
+    "assert-plus": "1.0.0",
+    "extsprintf": "1.0.2",
+    "jsprim": "0.5.1",
+    "verror": "1.3.6"
+  }
 }

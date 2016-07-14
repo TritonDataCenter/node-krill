@@ -13,6 +13,7 @@ var pred;
 pred = mod_krill.createPredicate({});
 mod_assert.ok(pred.trivial());
 mod_assert.deepEqual([], pred.fields());
+mod_assert.deepEqual({}, pred.fieldsAndValues());
 mod_assert.equal('1', pred.toCStyleString());
 mod_assert.ok(pred.eval({}));
 mod_assert.ok(pred.eval({ 'hostname': 'sharptooth' }));
@@ -25,6 +26,7 @@ pred = mod_krill.createPredicate(
     { 'zonename': 'string' });
 mod_assert.ok(!pred.trivial());
 mod_assert.deepEqual([ 'zonename' ], pred.fields());
+mod_assert.deepEqual({ zonename: [ 'bar' ] }, pred.fieldsAndValues());
 mod_assert.equal('zonename == "bar"', pred.toCStyleString());
 mod_assert.throws(function () { pred.eval({}); }, /no translation/);
 mod_assert.ok(pred.eval({ 'zonename': 'bar' }));
@@ -47,6 +49,11 @@ pred = mod_krill.createPredicate({
 mod_assert.ok(!pred.trivial());
 mod_assert.deepEqual([ 'hostname', 'latency', 'zonename' ],
     pred.fields().sort());
+mod_assert.deepEqual({
+    zonename: [ 'bar' ],
+    hostname: [ 'sharptooth' ],
+    latency: [ 15 ]
+}, pred.fieldsAndValues());
 mod_assert.equal('(zonename == "bar") && (hostname != "sharptooth") && ' +
     '(latency >= 15)', pred.toCStyleString());
 mod_assert.throws(function () { pred.eval({}); }, /no translation/);
@@ -107,6 +114,10 @@ pred = mod_krill.createPredicate({
 });
 mod_assert.ok(!pred.trivial());
 mod_assert.deepEqual([ 'count', 'latency' ], pred.fields().sort());
+mod_assert.deepEqual({
+    count: [ 15 ],
+    latency: [ 10, 20 ]
+}, pred.fieldsAndValues());
 mod_assert.equal('(latency < 10) || (count <= 15) || (latency > 20)',
     pred.toCStyleString());
 mod_assert.ok(pred.eval({ 'latency': 9, 'count': 20 }));
