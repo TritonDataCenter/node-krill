@@ -83,6 +83,36 @@ console.log('LDAP search filter: ', predicate.toLDAPFilterString());
 /* Prints "(|(hostname=spike)(latency>300))" */
 ```
 
+Please note however that without knowing the LDAP object schema, it is not
+possible to generate a filter that matches all objects. As a result, trivial
+predicates cannot be serialized as LDAP search filters:
+
+```javascript
+var pred = krill.createPredicate({});
+pred.toLDAPSearchFilter();
+/* Throws the following error:
+Error: Cannot serialize empty predicate to LDAP search filter
+*/
+```
+
+The recommended way to handle this case is to check if the predicate is trivial
+before calling `toLDAPSearchFilter`:
+
+```javascript
+var pred = krill.createPredicate({});
+var ldapSearchFilter;
+if (!pred.trivial()) {
+    ldapSearchFilter = pred.toLDAPFilterString();
+} else {
+    /*
+     * This example assumes that when the predicate is trivial, the intention
+     * is to build a LDAP search filter that includes all entries, but this is
+     * done only to illustrate a common use case.
+     */
+    ldapSearchFilter = '(someRDN=*)';
+}
+```
+
 You can also evaluate the predicate for a specific set of values:
 
 ```javascript
