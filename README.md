@@ -83,8 +83,9 @@ console.log('LDAP search filter: ', predicate.toLDAPFilterString());
 /* Prints "(|(hostname=spike)(latency>300))" */
 ```
 
-Please note however that trivial predicates cannot be serialized to LDAP search
-filters:
+Please note however that without knowing the LDAP object schema, it is not
+possible to generate a filter that matches all objects. As a result, trivial
+predicates cannot be serialized as LDAP search filters:
 
 ```javascript
 var pred = krill.createPredicate({});
