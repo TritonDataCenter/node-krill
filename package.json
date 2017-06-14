@@ -1,7 +1,7 @@
 {
 	"name": "krill",
 	"description": "simple boolean filter language with support for C, DTrace and LDAP output",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"license": "MIT",
 	"contributors": [
 	    "Robert Mustacchi <rm@joyent.com>",

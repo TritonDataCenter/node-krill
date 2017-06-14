@@ -36,7 +36,9 @@ var invalids = [
     [ { 'lt': [ 's', '3' ] },	/cannot be applied to fields of type/, types ],
     [ { 'le': [ 's', '3' ] },	/cannot be applied to fields of type/, types ],
     [ { 'ge': [ 's', '3' ] },	/cannot be applied to fields of type/, types ],
-    [ { 'gt': [ 's', '3' ] },	/cannot be applied to fields of type/, types ]
+    [ { 'gt': [ 's', '3' ] },	/cannot be applied to fields of type/, types ],
+    [ { 'eq': [ 'foo', null ] },
+        /predicate { eq: \[ 'foo', null \] }: field "foo" is not a string, number, or boolean/ ]
     /* END JSSTYLED */
 ];
 
