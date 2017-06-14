@@ -16,7 +16,7 @@ mod_assert.deepEqual([], pred.fields());
 mod_assert.deepEqual({}, pred.fieldsAndValues());
 mod_assert.equal('1', pred.toCStyleString());
 mod_assert.throws(function emptyPredToLDAPFilter() {
-    pred.toLDAPFilterString()
+    pred.toLDAPFilterString();
 }, /Cannot serialize empty predicate to LDAP search filter/);
 mod_assert.ok(pred.eval({}));
 mod_assert.ok(pred.eval({ 'hostname': 'sharptooth' }));
